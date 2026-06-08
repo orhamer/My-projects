@@ -1,32 +1,71 @@
-#countLabel{
+/* Center everything perfectly inside the mobile viewport */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: #ffffff;
+}
+
+.clicker-app {
+  text-align: center;
+  width: 100%;
+  max-width: 480px; /* Prevents layout from over-stretching */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#countLabel {
   display: block;
-  text-align: center;
-  font-size: 35em;
-  font-family: Helvetica;
-  transition: 2.5s;
+  font-size: clamp(6rem, 20vw, 12rem); /* Dynamic fluid sizing for phone screens */
+  font-weight: bold;
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease; /* Fast, snappy transition for instant feedback */
 }
 
-#btnCountainer{
-  text-align: center;
+/* Stack layout cleanly without invalid float code */
+#btnContainer {
+  display: grid;
+  grid-template-columns: 1fr; /* Default to single column for standard phones */
+  gap: 16px; /* Generous physical separation to avoid mis-clicks */
 }
 
-.buttons{
-  padding: 10px 20px;
-  font-size: 5em;
+.buttons {
+  box-sizing: border-box;
+  min-height: 60px; /* Creates an excellent mobile thumb target */
+  padding: 16px 20px;
+  font-size: 1.5rem; /* Highly legible button text on tiny screens */
   color: white;
   background-color: rgb(11, 96, 138);
   border-radius: 15px;
   cursor: pointer;
-  border: 0cm;
-  transition: .5s;
-  float: center;
-  padding-right: 10px;
+  border: none; /* Replaced invalid '0cm' statement */
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent; /* Erases ugly default tap overlays on iOS/Android */
 }
 
-.buttons:hover{
-  opacity: .7;
+/* Hover fixes for mobile: touch screens don't have mouse hovers */
+@media (hover: hover) {
+  .buttons:hover {
+    opacity: 0.7;
+  }
 }
 
-.buttons:active{
-  transform: scale(0.97);
+/* Instant haptic-like scaling response when compressed */
+.buttons:active {
+  transform: scale(0.95);
+  background-color: rgb(8, 73, 105);
+}
+
+/* Media query adjustment if the phone is flipped horizontally */
+@media (min-width: 400px) {
+  #btnContainer {
+    grid-template-columns: repeat(3, 1fr); /* Snaps to 3 columns on larger phone widths */
+  }
+  #countLabel {
+    margin-bottom: 3rem;
+  }
 }
